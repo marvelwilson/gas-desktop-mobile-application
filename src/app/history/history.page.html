@@ -1,0 +1,333 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/admin-dashboard" routerDirection="back" class="back">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-button text="" icon="add">BACK</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 700px;">
+      <!-- partial:partials/_sidebar.html -->
+
+      <!-- partial -->
+      <div class="main-panel" style="width:100%;">
+        <div class="content-wrapper">
+
+
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Search Records</h4>
+
+                  <div class="form-sample">
+                    <p class="red" style="color:red;">{{response}}</p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label>DD MM YY</ion-label>
+                          <ion-datetime [(ngModel)]="from" displayFormat="D-MM-YYYY" min="2021"></ion-datetime>
+                        </ion-item>
+                      </div>
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label>DD MM YY</ion-label>
+                          <ion-datetime [(ngModel)]="to" displayFormat="D-MM-YYYY" min="2021"></ion-datetime>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-button (click)="search_history(from, to)" color="primary">SEARCH
+                        </ion-button>
+                      </div>
+                    </div>
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Records<span style="float: right;"><strong>Total NGN: </strong>
+                      {{total}}<strong> Total KG: </strong> {{kgt}}</span></h4>
+                  <div class="form-inline">
+
+                    <div class="input-group mb-2 mr-sm-4">
+                      <div class="form-sample">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label style="color: black;">Staff</label>
+                            <select (change)="filter_history('staff')" [(ngModel)]="staff_filter" class="form-control"
+                              id="inlineFormInputGroupUsername2">
+                              <option>Filter by staff</option>
+                              <option value="">All staffs</option>
+                              <option value="Admin">Admin</option>
+                              <option *ngFor="let staff of staffs" value="{{staff.id}}">{{staff.fname}} {{staff.lname}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="input-group mb-2 mr-sm-4">
+                      <div class="form-sample">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label style="color: black;">Item type</label>
+                            <select (change)="filter_history('item')" [(ngModel)]="item_filter" class="form-control">
+                              <option value="">Filter by item type</option>
+                              <option value="Gas">Gas</option>
+                              <option value="Accessory">Accessory</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="input-group mb-2 mr-sm-4">
+                      <div class="form-sample">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label style="color: black;">Sales type</label>
+                            <select (change)="filter_history('sale')" [(ngModel)]="sale_filter" class="form-control">
+                              <option value="">Filter by sale type</option>
+                              <option value="">All types</option>
+                              <option value="Retail">Retail</option>
+                              <option value="Wholesale">Wholesale</option>
+                              <option value="Discount">Discount</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="input-group mb-2 mr-sm-4">
+
+                      <div class="form-sample">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label style="color: black;">Customer</label>
+                            <input type="text" class="form-control" [(ngModel)]="cusd"
+                              (change)="filter_history('cus')" />
+                          </div>
+                        </div>
+
+
+
+
+
+                      </div>
+                    </div>
+
+                    <div class="input-group mb-2 mr-sm-4">
+
+                      <div class="form-sample">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label style="color: black;">Kg</label>
+                            <input type="text" class="form-control" [(ngModel)]="cuskg"
+                              (change)="filter_history('cuskg')" />
+                          </div>
+                        </div>
+
+
+
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table table-bordered table-responsive">
+                    <thead>
+                      <tr>
+                        <th> S/N </th>
+                        <th> User </th>
+                        <th> Type </th>
+                        <th> Item / KG </th>
+                        <th> Quantity </th>
+                        <th> Price </th>
+                        <th> Total </th>
+                        <th> Customer name </th>
+                        <th> Customer phone </th>
+                        <th> Amount tendered </th>
+                        <th> Change </th>
+                        <th> Ref </th>
+                        <th> Date </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let entry of stored_history; let i = index">
+                      <tr>
+                        <td> {{i+1}} </td>
+                        <td> {{entry.user}} </td>
+                        <td> {{entry.type}} </td>
+                        <td> {{entry.item}} </td>
+                        <td> {{entry.quantity}} </td>
+                        <td> {{entry.price}} </td>
+                        <td> {{entry.total}} </td>
+
+                        <td> {{entry.cname}} </td>
+                        <td> {{entry.cphone}} </td>
+                        <td> {{entry.amt_ten}} </td>
+                        <td> {{entry.chng}} </td>
+                        <td> {{entry.ref}} </td>
+                        <td> {{entry.createdat}} </td>
+                        <td> <ion-button id="open-modal{{i}}"><ion-icon
+                              name="create-outline"></ion-icon></ion-button>
+                              <ion-button color="danger" (click)="del(entry.id)"><ion-icon
+                                name="trash-outline"></ion-icon></ion-button>
+                             </td>
+
+
+                        <!-- edit modal -->
+                        <ion-modal #modal trigger="open-modal{{i}}" [enterAnimation]="enterAnimation"
+                          [leaveAnimation]="leaveAnimation">
+                          <ng-template>
+                            <ion-header>
+                              <ion-toolbar>
+                                <ion-title>Edit History</ion-title>
+                                <ion-buttons slot="end">
+                                  <ion-button (click)="modal.dismiss()">Close</ion-button>
+                                </ion-buttons>
+                              </ion-toolbar>
+                            </ion-header>
+                            <ion-content>
+
+
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="card">
+                                    <div class="card-body">
+                                      <h4 class="card-title">Edit History</h4>
+                                      <form #history="ngForm" (ngSubmit)="updateHistory(history.value)" class="form-sample">
+                                        
+                                        <div class="row">
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Type</ion-label>
+                                              <ion-input name="type" [(ngModel)]="entry.type" ></ion-input>
+                                            </ion-item>
+                                          </div>
+
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Item / KG</ion-label>
+                                              <ion-input  name="item" [(ngModel)]="entry.item" type="number"></ion-input>
+                                            </ion-item>
+                                          </div>
+
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Quantity</ion-label>
+                                              <ion-input  name="quantity" [(ngModel)]="entry.quantity" type="number"></ion-input>
+                                            </ion-item>
+                                          </div>
+                                          
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Price</ion-label>
+                                              <ion-input  name="price" [(ngModel)]="entry.price" type="number"></ion-input>
+                                            </ion-item>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Total</ion-label>
+                                              <ion-input name="total" [(ngModel)]="entry.total" type="number"></ion-input>
+                                            </ion-item>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Cusomer Name</ion-label>
+                                              <ion-input  name="cname" [(ngModel)]="entry.cname"></ion-input>
+                                            </ion-item>
+                                          </div>
+
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Customer Phone</ion-label>
+                                              <ion-input name="phone" [(ngModel)]="entry.cphone" type="number"></ion-input>
+                                            </ion-item>
+                                          </div>
+
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Amount Tendered</ion-label>
+                                              <ion-input  name="tendered" [(ngModel)]="entry.amt_ten" type="number"></ion-input>
+                                            </ion-item>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <ion-item>
+                                              <ion-label position="floating">Change</ion-label>
+                                              <ion-input name="change" [(ngModel)]="entry.chng"></ion-input>
+                                              <ion-input name="id" type="hidden" [(ngModel)]="entry.id"></ion-input>
+
+                                            </ion-item>
+                                          </div>
+
+                                          
+                                          
+
+                                           
+                                          <div class="col-md-6">
+                                            <ion-button type="submit" color="primary">
+                                              <ion-label *ngIf="!submitted">Submit</ion-label>
+                                              <ion-label *ngIf="submitted">Proccessing .....</ion-label>
+                                              <ion-spinner color="light" *ngIf="submitted"></ion-spinner>
+                                            </ion-button>
+                                          </div>
+
+                                        </div>
+
+
+
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                              </div>
+
+
+                            </ion-content>
+                          </ng-template>
+                        </ion-modal>
+                        <!-- end edit modal -->
+
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>

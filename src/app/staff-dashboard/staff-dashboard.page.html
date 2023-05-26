@@ -1,0 +1,220 @@
+<ion-content>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 800px;">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile">
+            <a [routerLink]="['/staffs']" class="nav-link">
+              <div class="nav-profile-image">
+                <img src="assets/images/faces/pic-1.png" alt="profile">
+                <span class="login-status online"></span>
+                <!--change to offline or busy as needed-->
+              </div>
+              <div class="nav-profile-text d-flex flex-column">
+                <span class="font-weight-bold mb-2">{{staff_name}}</span>
+                <span class="text-secondary text-small">{{staff_position}}</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/gas-sales']">
+              <span class="menu-title">Sales</span>
+              <i class="mdi mdi-chart-bar menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/home']">
+              <span class="menu-title">Logout</span>
+              <i class="mdi mdi-chevron-double-right menu-icon"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <div class="page-header">
+            <h3 class="page-title">
+              <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+              </span> Dashboard
+            </h3>
+            <nav aria-label="breadcrumb">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                  <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-success card-img-holder text-white">
+                <div class="card-body">
+                  <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                  <h4 class="font-weight-normal mb-3">Gas Available <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                  </h4>
+                  <h2 class="mb-5">{{gas_value}} KG</h2>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+
+              <ion-button *ngIf="sync_g == 'true'" (click)="sync_gas()" color="primary">SYNC LOCAL TO LIVE</ion-button>
+              <p style="color:red;">{{ogres}}</p>
+            </div>
+
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Search Records</h4>
+
+                  <div class="form-sample">
+                    <p class="red" style="color:red;">{{response}}</p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label>MM DD YY</ion-label>
+                          <ion-datetime [(ngModel)]="from" displayFormat="D-MM-YYYY" min="2021"></ion-datetime>
+                        </ion-item>
+                      </div>
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label>MM DD YY</ion-label>
+                          <ion-datetime [(ngModel)]="to" displayFormat="D-MM-YYYY" min="2021"></ion-datetime>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-button (click)="search_shistory(from, to)" color="primary">SEARCH
+                        </ion-button>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        
+                        <ion-button *ngIf="sync_h == 'false'" (click)="sync_db()" color="primary">SYNC DATABASE
+                        </ion-button>
+                        <p><small style="color: black;">{{sync_res}}</small></p>
+                      </div>
+                    </div>
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Records<span style="float: right;"><strong>TOtal: </strong> {{total}}<strong>
+                        Total KG: </strong> {{kgt}}</span></h4>
+                  <div class="form-inline">
+
+                    <div class="input-group mb-2 mr-sm-4">
+                      <div class="form-sample">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label style="color: black;">Sales type</label>
+                            <select (change)="filter_history('sale')" [(ngModel)]="sale_filter" class="form-control">
+                              <option value="">Filter by sale type</option>
+                              <option value="">All types</option>
+                              <option value="Retail">Retail</option>
+                              <option value="Wholesale">Wholesale</option>
+                              <option value="Discount">Discount</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="input-group mb-2 mr-sm-4">
+                      <div class="form-sample">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label style="color: black;">Item type</label>
+                            <select (change)="filter_history('item')" [(ngModel)]="item_filter" class="form-control">
+                              <option value="">Filter by item type</option>
+                              <option value="Gas">Gas</option>
+                              <option value="Accessory">Accessory</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th> User </th>
+                          <th> Type </th>
+                          <th> Item </th>
+                          <th> Quantity </th>
+                          <th> Price </th>
+                          <th> Total </th>
+                          <th> Customer name </th>
+                          <th> Customer phone </th>
+                          <th> Amount tendered </th>
+                          <th> Change </th>
+                          <th> Ref </th>
+                          <th> Date </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let entry of stored_history">
+                        <tr>
+                          <td> {{entry.user}} </td>
+                          <td> {{entry.type}} </td>
+                          <td> {{entry.item}} </td>
+                          <td> {{entry.quantity}} </td>
+                          <td> {{entry.price}} </td>
+                          <td> {{entry.total}} </td>
+
+                          <td> {{entry.cname}} </td>
+                          <td> {{entry.cphone}} </td>
+                          <td> {{entry.amt_ten}} </td>
+                          <td> {{entry.chng}} </td>
+                          <td> {{entry.ref}} </td>
+                          <td> {{entry.createdat}} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>

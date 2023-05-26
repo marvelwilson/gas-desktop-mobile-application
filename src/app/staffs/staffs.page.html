@@ -1,0 +1,141 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/admin-dashboard" routerDirection="back" class="back">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-button text="" icon="add">BACK</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 700px;">
+      <!-- partial:partials/_sidebar.html -->
+      
+      <!-- partial -->
+      <div class="main-panel" style="width:100%;">
+        <div class="content-wrapper">
+          
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add new staff</h4>
+                  <div class="form-sample">
+                    <p class="red" style="color:red;">{{bres}}</p>
+                    <p style="color: green;">{{gres}}</p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">First Name</ion-label>
+                          <ion-input [(ngModel)]="fname"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Last Name</ion-label>
+                          <ion-input [(ngModel)]="lname"></ion-input>
+                        </ion-item>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label>Gender</ion-label>
+                          <ion-select placeholder="Select One" [(ngModel)]="gender">
+                            <ion-select-option value="Female">Female</ion-select-option>
+                            <ion-select-option value="Male">Male</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Position</ion-label>
+                          <ion-input [(ngModel)]="position"></ion-input>
+                        </ion-item>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Username</ion-label>
+                          <ion-input [(ngModel)]="username"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Password</ion-label>
+                          <ion-input [(ngModel)]="password"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-button (click)="create_staff(fname, lname, gender, position, username, password)" color="primary">Submit</ion-button>
+                    </div>
+                    </div>
+                    
+                   
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">All Staffs</h4>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th> # </th>
+                        <th> First name </th>
+                        <th> Lasts name </th>
+                        <th> Gender </th>
+                        <th> Position </th>
+                        <th> Username </th>
+                        <th> Password </th>
+                        <th> Action </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let staff of staffs">
+                      <tr>
+                        <td> {{staff.id}} </td>
+                        <td> {{staff.fname}}  </td>
+                        <td>  {{staff.lname}} </td>
+                        <td> {{staff.gender}} </td>
+                        <td> {{staff.position}} </td>
+                        <td> {{staff.username}} </td>
+                        <td> {{staff.password}} </td>
+                        <td> <ion-icon [routerLink]="['/edit-staff/',staff.id]" routerDirection="forward" name="create-outline"></ion-icon> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>

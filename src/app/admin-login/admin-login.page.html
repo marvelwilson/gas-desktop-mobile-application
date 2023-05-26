@@ -1,0 +1,36 @@
+
+
+<ion-content>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth">
+        <div class="row flex-grow">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left p-5">
+              <h4 style="color:black;">Hello! let's get started</h4>
+              <p class="red" style="color:red;">{{response}}</p>
+              <h6 class="font-weight-light">Sign in to continue.</h6>
+              <div class="pt-3">
+                <ion-item style="margin-bottom: 10px;;">
+                  <ion-input [(ngModel)]="username"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-input [(ngModel)]="password" type="password"></ion-input>
+                </ion-item>
+                <div class="mt-3">
+                  <ion-button (click)="login(username, password)" color="primary">LOGIN
+                  </ion-button>
+                </div>
+                <div class="text-center mt-4 font-weight-light"> Not an admin? <a [routerLink]="['/home']" routerDirection="back" class="text-primary">Back</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>

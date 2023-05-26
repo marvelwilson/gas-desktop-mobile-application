@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/admin-dashboard" routerDirection="back" class="back">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-button text="" icon="add">BACK</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 700px;">
+      <!-- partial:partials/_sidebar.html -->
+      
+      <!-- partial -->
+      <div class="main-panel" style="width:100%;">
+        <div class="content-wrapper">
+          
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Search Customer</h4>
+                  
+                  <div class="form-sample">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Customer's details</ion-label>
+                          <ion-input [(ngModel)]="cusd"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                      <ion-button (click)="get_customer()" color="primary">SEARCH
+                      </ion-button>
+                    </div>
+                    </div>
+                    
+                    
+                    
+                   
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">All Customers</h4>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th> # </th>
+                        <th> Tag No</th>
+                        <th> Name </th>
+                        <th> Phone </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let customer of customers">
+                      <tr>
+                        <td> {{customer.id}} </td>
+                        <td> {{customer.tag_no}}  </td>
+                        <td>  {{customer.name}} </td>
+                        <td> {{customer.phone}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>

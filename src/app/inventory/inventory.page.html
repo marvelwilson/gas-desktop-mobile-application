@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/admin-dashboard" routerDirection="back" class="back">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-button text="" icon="add">BACK</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 700px;">
+      <!-- partial:partials/_sidebar.html -->
+
+      <!-- partial -->
+      <div class="main-panel" style="width:100%;">
+        <div class="content-wrapper">
+
+
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add Item</h4>
+                  <div class="form-sample">
+                    <p class="red" style="color:red;">{{response}}</p>
+                    <p style="color: green;">{{gres}}</p>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Item name</ion-label>
+                          <ion-input [(ngModel)]="title"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Cost Price</ion-label>
+                          <ion-input [(ngModel)]="cprice"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Retail Price</ion-label>
+                          <ion-input type="number" [(ngModel)]="price"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Wholesale Price</ion-label>
+                          <ion-input type="number" [(ngModel)]="wprice"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Discount Price</ion-label>
+                          <ion-input type="number" [(ngModel)]="dprice"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item>
+                          <ion-label position="floating">Quantity</ion-label>
+                          <ion-input type="number" [(ngModel)]="iqty"></ion-input>
+                        </ion-item>
+                      </div>
+                      <div class="col-md-12">
+                        <ion-button (click)="create_inventory(title, cprice, price, wprice, dprice, iqty)" color="primary">
+                          Submit</ion-button>
+
+
+                      </div>
+                    </div>
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Inventory</h4>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th> # </th>
+                        <th> Title </th>
+                        <th> Cost Price </th>
+                        <th> Retail Price </th>
+                        <th> Wholesale Price </th>
+                        <th> Discount Price </th>
+                        <th> Quantity </th>
+                        <th> Action </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let inventory of inventories">
+                      <tr>
+                        <td> {{inventory.id}} </td>
+                        <td> {{inventory.title}} </td>
+                        <td> {{inventory.cprice}} </td>
+                        <td> {{inventory.price}} </td>
+                        <td> {{inventory.wprice}} </td>
+                        <td> {{inventory.dprice}} </td>
+                        <td> {{inventory.quantity}} </td>
+                        <td> <ion-icon [routerLink]="['/edit-inventory/',inventory.id]" routerDirection="forward" name="create-outline"></ion-icon> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="container-fluid clearfix">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com
+              2020</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>

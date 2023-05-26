@@ -1,0 +1,136 @@
+
+
+<ion-content>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 700px;" style="min-height: 800px;">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile">
+            <a [routerLink]="['/staffs']" class="nav-link">
+              <div class="nav-profile-image">
+                <img src="assets/images/faces/pic-1.png" alt="profile">
+                <span class="login-status online"></span>
+                <!--change to offline or busy as needed-->
+              </div>
+              <div class="nav-profile-text d-flex flex-column">
+                <span class="font-weight-bold mb-2">Admin</span>
+                <span class="text-secondary text-small">Admin</span>
+              </div>
+              <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin-dashboard']">
+              <span class="menu-title">Dashboard</span>
+              <i class="mdi mdi-home menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/staffs']" routerDirection="forward">
+              <span class="menu-title">Staffs</span>
+              <i class="mdi mdi-contacts menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/inventory']" routerDirection="forward">
+              <span class="menu-title">Inventory</span>
+              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/gas-kg']" routerDirection="forward">
+              <span class="menu-title">Gas</span>
+              <i class="mdi mdi-chart-bar menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/history']" routerDirection="forward">
+              <span class="menu-title">History</span>
+              <i class="mdi mdi-backburger menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/customers']" routerDirection="forward">
+              <span class="menu-title">Customers</span>
+              <i class="mdi mdi-account-multiple menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/settings']" routerDirection="forward">
+              <span class="menu-title">Settings</span>
+              <i class="mdi mdi-settings menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/change-password']" routerDirection="forward">
+              <span class="menu-title">Change password</span>
+              <i class="mdi mdi-lock menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/home']">
+              <span class="menu-title">Logout</span>
+              <i class="mdi mdi-chevron-double-right menu-icon"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          
+          <div class="page-header">
+            <h3 class="page-title">
+              <span class="page-title-icon bg-info text-white mr-2">
+                <i class="mdi mdi-home"></i>
+              </span> Dashboard
+            </h3>
+            <nav aria-label="breadcrumb">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                  <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-success card-img-holder text-white">
+                <div class="card-body">
+                  <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                  <h4 class="font-weight-normal mb-3">Gas Available <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                  </h4>
+                  <h2 class="mb-5">{{gas_value}} KG</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ion-padding">
+            <ion-card>
+              <ion-card-header>
+                <p style="color: red;">{{response}}</p>
+                <ion-button (click)="getbardata(datay)"  class="bg-dark">GET RECORDS
+                </ion-button>
+                <ion-item>
+                  <ion-label>Enter year</ion-label>
+                  <ion-input type="number" [(ngModel)]="datay"></ion-input>
+                </ion-item>
+              </ion-card-header>
+              <ion-card-content>
+                <canvas #barCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>

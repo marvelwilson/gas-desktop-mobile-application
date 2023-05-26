@@ -1,0 +1,314 @@
+<ion-header class="non-printable">
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/staff-dashboard" routerDirection="back" class="back">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-button text="" icon="add">BACK</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-scroller non-printable">
+    <!-- partial:partials/_navbar.html -->
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 700px;">
+      <!-- partial:partials/_sidebar.html -->
+
+      <!-- partial -->
+      <div class="main-panel" style="width:100%;">
+        <div class="content-wrapper">
+
+
+
+
+          <div class="row">
+            <div class="col-md-12">
+
+              <ion-button *ngIf="sync_c == 'true'" (click)="sync_cylinder()" color="primary">SYNC LOCAL TO LIVE</ion-button>
+              <p style="color:red;">{{ores}}</p>
+            </div>
+            <div class="col-md-7 grid-margin stretch-card non-printable">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Sales Status</h4>
+                  <p style="color: red;">{{bres}}</p>
+                  <p style="color: green;">{{gres}}</p>
+                  
+                  <div class="tabset">
+                    <!-- Tab 1 -->
+                    <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
+                    <label style="color: black;" for="tab1">Gas</label>
+                    <!-- Tab 2 -->
+                    <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
+                    <label for="tab2" style="color: black;">Accessories</label>
+
+                    <div class="tab-panels">
+                      <section id="marzen" class="tab-panel" style="color: black;">
+                        <h2>Gas</h2>
+                        <ion-item class="ip">
+                          <ion-label>Type</ion-label>
+                          <ion-select placeholder="Select One" [(ngModel)]="type" (ngModelChange)="calc_gp_kg()">
+                            <ion-select-option value="{{rprice}}">Retail</ion-select-option>
+                            <ion-select-option value="{{wprice}}">Wholesale</ion-select-option>
+                            <ion-select-option value="{{dprice}}">Discount</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+
+                        <ion-item class="ip">
+                          <ion-label position="floating">Cylinder</ion-label>
+                          <ion-input type="number" [(ngModel)]="cylinder" (ngModelChange)="calc_gp()"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="ip">
+                          <ion-label position="floating">Price</ion-label>
+                          <ion-input type="number" [(ngModel)]="gprice" (ngModelChange)="calc_kg()"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="ip">
+                          <ion-label position="floating">Quantity</ion-label>
+                          <ion-input type="number" [(ngModel)]="gqty"></ion-input>
+                        </ion-item>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <ion-item style="margin-bottom: 10px;">
+                              <ion-label position="floating">Amount tendered</ion-label>
+                              <ion-input type="number" [(ngModel)]="amt_ten"></ion-input>
+                            </ion-item>
+                          </div>
+    
+                          <div class="col-md-6">
+                            <ion-item style="margin-bottom: 10px;">
+                              <ion-label position="floating">Change</ion-label>
+                              <ion-input type="number" [(ngModel)]="chng"></ion-input>
+                            </ion-item>
+                          </div>
+                        </div>
+                        <ion-button (click)="gassales(type, cylinder, gprice, gqty)" color="primary">ADD
+                        </ion-button>
+                      </section>
+                      <section id="rauchbier" class="tab-panel" style="color: black;">
+                        <h2>Accessories</h2>
+                        <ion-item class="ip">
+                          <ion-label>Item</ion-label>
+                          <ion-select placeholder="Select One" [(ngModel)]="item"
+                            (ngModelChange)="getitemprices()">
+                            <ion-select-option *ngFor="let inventory of inventories" value="{{inventory.id}}">
+                              {{inventory.title}}</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+
+                        <ion-item class="ip">
+                          <ion-label>Price</ion-label>
+                          <ion-select placeholder="Select One" [(ngModel)]="aprice">
+                            <ion-select-option value="{{arprice}}---Retail">Retail</ion-select-option>
+                            <ion-select-option value="{{awprice}}---Wholesale">Wholesale</ion-select-option>
+                            <ion-select-option value="{{adprice}}---Discount">Discount</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+
+                        <ion-item class="ip">
+                          <ion-label position="floating">Quantity</ion-label>
+                          <ion-input type="number" [(ngModel)]="aqty"></ion-input>
+                        </ion-item>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <ion-item style="margin-bottom: 10px;">
+                              <ion-label position="floating">Amount tendered</ion-label>
+                              <ion-input type="number" [(ngModel)]="amt_ten"></ion-input>
+                            </ion-item>
+                          </div>
+    
+                          <div class="col-md-6">
+                            <ion-item style="margin-bottom: 10px;">
+                              <ion-label position="floating">Change</ion-label>
+                              <ion-input type="number" [(ngModel)]="chng"></ion-input>
+                            </ion-item>
+                          </div>
+                        </div>
+
+                        <ion-button (click)="ivnsales(item, aprice, aqty)" color="primary">ADD
+                        </ion-button>
+                      </section>
+
+
+                    </div>
+
+                  </div>
+
+                  <div class="form-sample">
+                    <h2 style="color: black;">Customer info</h2>
+                    <p style="color: red;">{{bres}}</p>
+                    <p style="color: green;">{{gres}}</p>
+                    <div class="add-items">
+                      <ion-item class="ip">
+                        <ion-label position="floating">Tag number</ion-label>
+                        <ion-input [(ngModel)]="tag"></ion-input>
+                      </ion-item>
+                      <ion-button (click)="check_tag_no(tag)" color="primary">Check customer
+                      </ion-button>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item style="margin-bottom: 10px;">
+                          <ion-label position="floating">Name</ion-label>
+                          <ion-input [(ngModel)]="cname"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item style="margin-bottom: 10px;">
+                          <ion-label position="floating">Phone</ion-label>
+                          <ion-input [(ngModel)]="cphone" ></ion-input>
+                        </ion-item>
+                      </div>
+
+                    </div>
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th> ITEM </th>
+                          <th> PRICE/QUANTITY </th>
+                          <th> # </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let sale of finalsales; let i = index">
+                          <td> {{sale.item}} KG</td>
+                          <td> {{sale.price}} / {{sale.qty}} </td>
+                          <td>
+                            <ion-icon (click)="removeitem(i)" name="close"></ion-icon>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>Total</th>
+                          <th>NGN {{t}}</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+
+                    <ion-button (click)="conf()" color="success">SAVE & PRINT RECEIPT
+                    </ion-button>
+
+                    <ion-button (click)="conff()" color="success">SAVE RECEIPT
+                    </ion-button>
+                  </div>
+
+                  <h4 style="color: black;">Customer's history</h4>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th> Last 7 days </th>
+                          <th> {{lastday}} </th>
+                        </tr>
+                        <tr>
+                          <th> Last month </th>
+                          <th> {{lastmnth}} </th>
+                        </tr>
+                        <tr>
+                          <th> Last year </th>
+                          <th> {{lastyr}} </th>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+
+  
+
+  <!-- The Modal -->
+<div id="myModal" class="modal printable">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <table class="printable">
+      <tr style="width: 90%;">
+        <th class="rhd" colspan="2">{{comname}}</th>
+      </tr>
+      <tr style="width: 90%;">
+        <th class="rhd" colspan="2">{{comphone}}</th>
+      </tr>
+      <tr style="width: 90%;">
+        <th class="rhd" colspan="2">{{comemail}}</th>
+      </tr>
+      <tr style="width: 90%;">
+        <th class="rhd" colspan="2">{{comaddress}}</th>
+      </tr>
+
+      <tr style="width: 50%;">
+        <td class="rbd" colspan="2">Customer name: {{cname}}</td>
+      </tr>
+
+      <tr style="width: 50%;">
+        <td class="rbd" colspan="2">Customer phone: {{cphone}}</td>
+      </tr>
+
+      <tr style="width: 50%;">
+        <td class="rbd">Date: {{today}}</td>
+        <td class="rbd" style="float: right;">Ref: {{ref}}</td>
+      </tr>
+
+      <tr style="width: 50%;">
+        <td class="rbd">Time: {{time}}</td>
+        <td class="rbd" style="float: right;">Staff; {{fname}}</td>
+      </tr>
+
+      <tr style="width: 50%;">
+        <td class="rbd">ITEM</td>
+        <td class="rbd" style="float: right;">PRICE/QUANTITY</td>
+      </tr>
+      <tr *ngFor="let sale of finalsales; let i = index" style="width: 50%;">
+        <td class="rbd">{{sale.item}} KG</td>
+        <td class="rbd" style="float: right;">{{sale.price}} / {{sale.qty}}</td>
+      </tr>
+      <tr>
+        <td class="rbd">Total</td>
+        <td class="rbd">NGN {{t}}</td>
+      </tr>
+      <tr>
+        <td class="rbd">Amount Tendered</td>
+        <td class="rbd">NGN {{amt_ten}}</td>
+      </tr>
+      <tr>
+        <td class="rbd">Change given</td>
+        <td class="rbd">NGN {{chng}}</td>
+      </tr>
+      <tr>
+        <td class="rbd" colspan="2">Thanks for your patronage!!!</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</ion-content>

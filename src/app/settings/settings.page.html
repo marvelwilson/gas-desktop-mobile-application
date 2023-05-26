@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/admin-dashboard" routerDirection="back" class="back">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-button text="" icon="add">BACK</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="min-height: 700px;">
+      <!-- partial:partials/_sidebar.html -->
+
+      <!-- partial -->
+      <div class="main-panel" style="width:100%;">
+        <div class="content-wrapper">
+
+
+          <div class="row">
+
+
+
+
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Settings</h4>
+                  <p style="color: red;">{{bres}}</p>
+                  <p style="color: green;">{{gres}}</p>
+                  <div class="form-sample">
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ion-item style="margin-bottom: 10px;">
+                          <ion-label position="floating">Name</ion-label>
+                          <ion-input [(ngModel)]="name"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item style="margin-bottom: 10px;">
+                          <ion-label position="floating">Phone</ion-label>
+                          <ion-input [(ngModel)]="phone"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item style="margin-bottom: 10px;">
+                          <ion-label position="floating">Email</ion-label>
+                          <ion-input [(ngModel)]="email"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-item style="margin-bottom: 10px;">
+                          <ion-label position="floating">Address</ion-label>
+                          <ion-input [(ngModel)]="adr"></ion-input>
+                        </ion-item>
+                      </div>
+
+                      <div class="col-md-6">
+                        <ion-button (click)="edit_info(name, phone, email, adr)" color="primary">Submit
+                        </ion-button>
+                      </div>
+
+                      <div class="col-md-12">
+
+                        <ion-button *ngIf="sync_i == 'true'" (click)="sync_info()" color="primary">SYNC LOCAL TO LIVE</ion-button>
+                        <p style="color:red;">{{ores}}</p>
+                      </div>
+
+                    </div>
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</ion-content>
