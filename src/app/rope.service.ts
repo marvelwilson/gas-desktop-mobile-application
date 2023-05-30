@@ -13,7 +13,7 @@ export class RopeService {
 
   constructor(public http: HttpClient) {
     this.ip = JSON.parse(localStorage.getItem('ip'));
-    this.url = "http://"+this.ip+"/gas/";
+    this.url = "http://"+this.ip+"/gas/"; //local ip
     this.ourl = "your baseUrl";
     console.log(this.url);
    }
